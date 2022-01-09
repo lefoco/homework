@@ -62,7 +62,7 @@ func rootHandler(response http.ResponseWriter, request *http.Request) {
 		}
 	}()
 
-	fmt.Println("Client IP =", getIp())
+	fmt.Println("Client IP =", getClientIp())
 	if os.Getenv("VERSION") != "" {
 		response.Header().Set("VERSION", os.Getenv("VERSION"))
 	}
@@ -82,13 +82,16 @@ func healthz(response http.ResponseWriter, request *http.Request) {
 	fmt.Println("healthz return code: ", http.StatusOK)
 }
 
-func getIp() string {
-	addrs, err := net.InterfaceAddrs()
+/**
+Get Client IP
+*/
+func getClientIp() string {
+	interfaceAddrs, err := net.InterfaceAddrs()
 	if err != nil {
 		return ""
 	}
 
-	for _, address := range addrs {
+	for _, address := range interfaceAddrs {
 		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 			if ipnet.IP.To4() != nil {
 				return ipnet.IP.String()

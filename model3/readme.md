@@ -20,6 +20,7 @@ cadmin@k8snode:~/httpserver$ sudo docker inspect e448c57a0a17 |grep -i pid
 
 #nsenter查看ip
 cadmin@k8snode:~/httpserver$ sudo nsenter -t 687685 -n ip a
+
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 inet 127.0.0.1/8 scope host lo

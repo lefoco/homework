@@ -1,11 +1,11 @@
 
 #编写 Dockerfile 将练习 2.2 编写的 httpserver 容器化
 
-sudo docker build -t lefoco/httpserver:${tag} .
+sudo docker build -t lefoco/httpserver:v1.0 .
 
 #将镜像推送至 docker 官方镜像仓库
 
-sudo docker push lefoco/httpserver:${tag}
+sudo docker push lefoco/httpserver:v1.0
 
 #通过 docker 命令本地启动 httpserver(pull from 官方镜像仓库)
 

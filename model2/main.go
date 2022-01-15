@@ -87,7 +87,6 @@ func rootHandler(response http.ResponseWriter, request *http.Request) {
 	//Server 端记录访问日志包括客户端 IP，//HTTP 返回码, 输出到 server 端的标准输出
 	fmt.Println("Client IP =", getClientIp())
 	fmt.Println("http Status code =", http.StatusOK)
-
 }
 
 func healthz(response http.ResponseWriter, request *http.Request) {

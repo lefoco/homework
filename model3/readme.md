@@ -9,7 +9,7 @@ sudo docker push lefoco/httpserver:v1.0
 
 #docker 官方镜像仓库 url
 
-https://hub.docker.com/layers/lefoco/httpserver/v1.0/images/sha256-4f15213f482984fd66f3e8b3b6bb13537f5f757f3d7ab00b600e8896eb5a2e90?context=explore
+docker pull lefoco/httpserver:v1.0
 
 #通过 docker 命令本地启动 httpserver(pull from 官方镜像仓库)
 

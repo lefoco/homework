@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/golang/glog"
-	_ "io"
 	"log"
 	"net"
 	"net/http"
@@ -45,7 +43,6 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer func() {
-		glog.Flush()
 		cancel()
 	}()
 

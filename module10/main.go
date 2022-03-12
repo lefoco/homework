@@ -99,13 +99,14 @@ func rootHandler(response http.ResponseWriter, request *http.Request) {
 
 	duration := time.Since(beginTime).Seconds()
 
-	// metric, 请求计数
+	// metric, total count
 	metric.HTTPReqTotal.With(prometheus.Labels{
 		"method": request.Method,
 		"path":   request.RequestURI,
 		"status": strconv.Itoa(http.StatusOK),
 	}).Inc()
-	// 请求处理时长
+
+	// request duration
 	metric.HTTPReqDuration.With(prometheus.Labels{
 		"method": request.Method,
 		"path":   request.RequestURI,

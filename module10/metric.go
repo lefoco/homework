@@ -13,14 +13,14 @@ var (
 
 func init() {
 
-	// 监控接口请求耗时
+	// request duration
 	HTTPReqDuration = prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name:    "http_request_duration_seconds",
 		Help:    "The HTTP request latencies in seconds.",
 		Buckets: nil,
 	}, []string{"method", "path"})
 
-	// 监控接口请求次数
+	// request total count
 	HTTPReqTotal = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "http_requests_total",
 		Help: "Total number of HTTP requests made.",

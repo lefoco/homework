@@ -1,8 +1,9 @@
-package main
+package module10
 
 import (
 	"context"
 	"fmt"
+	"k8s.io/kubernetes/staging/src/k8s.io/apiserver/pkg/server/mux"
 	"log"
 	"math/rand"
 	"net"
@@ -14,7 +15,7 @@ import (
 	"syscall"
 	"time"
 
-	"metrics"
+	"github.com/lefoco/httpserver/metric"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -24,6 +25,7 @@ func main() {
 	serveMux := http.NewServeMux()
 	serveMux.HandleFunc("/", rootHandler)
 	serveMux.HandleFunc("/healthz", healthz)
+	serveMux.Handle("/metrics", promhttp.Handler())
 	serveMux.HandleFunc("/debug/pprof/", pprof.Index)
 	serveMux.HandleFunc("/debug/pprof/profile", pprof.Profile)
 	serveMux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
@@ -97,19 +99,16 @@ func rootHandler(response http.ResponseWriter, request *http.Request) {
 
 	duration := time.Since(beginTime).Seconds()
 
-	// after
-	log.Printf("request_out||client_ip=%s||uri=%s||code=%d||proc_time=%f\n", clientIp, r.RequestURI, response.Code, duration)
-
 	// metric, 请求计数
 	metric.HTTPReqTotal.With(prometheus.Labels{
-		"method": r.Method,
-		"path":   r.RequestURI,
-		"status": strconv.Itoa(response.Code),
+		"method": request.Method,
+		"path":   request.RequestURI,
+		"status": strconv.Itoa(http.StatusOK),
 	}).Inc()
 	// 请求处理时长
 	metric.HTTPReqDuration.With(prometheus.Labels{
-		"method": r.Method,
-		"path":   r.RequestURI,
+		"method": request.Method,
+		"path":   request.RequestURI,
 	}).Observe(duration)
 
 }

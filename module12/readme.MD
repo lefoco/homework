@@ -17,5 +17,5 @@ kubectl create -n istio-system secret tls cncamp-credential --key=cncamp.io.key 
 
 kubectl create -f istio-myhttpserver-specs.yaml -n module12
 
-curl --resolve httpsserver.cncamp.io:443:10.110.5.139 https://httpsserver.cncamp.io/hello -v -k
+curl --resolve httpsserver.cncamp.io:443:10.121.3.32 https://httpsserver.cncamp.io/hello -v -k
 ```

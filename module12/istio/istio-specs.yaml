@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: httpsserver
+spec:
+  gateways:
+    - httpsserver
+  hosts:
+    - httpsserver.cncamp.io
+  http:
+    - match:
+        - uri:
+            exact: "/httpserver/hello"
+        - port: 443
+      rewrite:
+        uri: "/hello"
+      route:
+        - destination:
+            host: httpserver.module12.svc.cluster.local
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: "/nginx"
+        - port: 443
+      rewrite:
+        uri: "/"
+      route:
+        - destination:
+            host: nginx.module12.svc.cluster.local
+            port:
+              number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: httpsserver
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - httpsserver.cncamp.io
+      port:
+        name: https-default
+        number: 443
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: cncamp-credential
